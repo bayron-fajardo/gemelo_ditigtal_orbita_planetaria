@@ -1,6 +1,10 @@
-# Simulador del Sistema Solar - Gemelo Digital NASA
+# Simulador del Sistema Solar - En camino a un Gemelo Digital
 
-Hola! Este es mi proyecto de simulación del sistema solar. Básicamente simula cómo se mueven los planetas usando física real y compara los resultados con datos "reales" de la NASA (bueno, son datos aproximados que puse yo, pero la idea es esa).
+Este proyecto de simulación del sistema solar,basado en física real. 
+Actualmente reproduce el movimiento de los planetas y compara los resultados con datos de referencia aproximados tomados de fuentes de la NASA.
+
+Este proyecto no es todavía un gemelo digital completo, sino una simulación con enfoque hacia el concepto de gemelo digital. La diferencia principal es que una simulación reproduce el comportamiento de un sistema con modelos matemáticos, mientras que un gemelo digital utiliza datos reales en tiempo real para mantener sincronización con el sistema físico.
+La idea es que, en el futuro, este proyecto se conecte a una API astronómica real (como NASA Horizons) para actualizar posiciones y realizar predicciones precisas, momento en el que podría considerarse un gemelo digital funcional.
 
 ## ¿Qué hace este programa?
 
@@ -10,7 +14,10 @@ Es una simulación visual donde puedes ver:
 - Qué tan preciso es el modelo comparado con la "realidad"
 - Información detallada de cada planeta cuando lo seleccionas
 
-La idea del "gemelo digital" es que tenemos dos versiones: la simulación (que calcula todo con física) y la "realidad" (los datos de NASA). Así podemos ver si nuestra física está bien o no.
+El concepto de gemelo digital se aplica aquí al tener dos representaciones del sistema:
+1. La simulación física (calculada por el programa).
+2. Los datos “reales” de referencia (aproximaciones tomadas como si vinieran de la NASA).
+Esto permite analizar la precisión del modelo y establecer la base de comparación que caracteriza a los gemelos digitales.
 
 ## Instalación
 
@@ -42,7 +49,7 @@ La idea del "gemelo digital" es que tenemos dos versiones: la simulación (que c
    python app.py
    ```
 
-¡Y listo! Debería abrirse una ventana con la simulación.
+Se abrirá una ventana con la simulación.
 
 ## Controles
 
@@ -118,7 +125,7 @@ Básicamente: lee input → calcula física → dibuja → repite.
 - **TIMESTEP**: Cada "tick" de la simulación representa 1 día (86,400 segundos). Puedes cambiarlo con las flechas.
 - **AU (Unidad Astronómica)**: Es la distancia Tierra-Sol (≈150 millones de km). Se usa para medir distancias en el sistema solar.
 - **G (Constante Gravitacional)**: 6.67428e-11. Es la constante de la ley de Newton que usamos para calcular fuerzas.
-- **SCALE**: Factor de conversión para que todo quepa en la pantalla (el espacio es ENORME).
+- **SCALE**: Factor de reducción para ajustar distancias reales a la pantalla.
 
 ## Sistema de colores
 
@@ -159,5 +166,3 @@ Los datos planetarios son aproximaciones de las órbitas reales pero simplificad
 ---
 
 **Nota**: Este es un proyecto educativo. Las órbitas están simplificadas (son circulares cuando en realidad son elípticas) y hay muchas aproximaciones. Pero es suficientemente preciso para entender cómo funciona la física orbital!
-
-Si tienes dudas o encuentras bugs, no dudes en preguntar!
