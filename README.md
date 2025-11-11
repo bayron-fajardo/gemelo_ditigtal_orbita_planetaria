@@ -1,8 +1,8 @@
-# 🌌 Simulador del Sistema Solar - Gemelo Digital NASA
+# Simulador del Sistema Solar - Gemelo Digital NASA
 
 Hola! Este es mi proyecto de simulación del sistema solar. Básicamente simula cómo se mueven los planetas usando física real y compara los resultados con datos "reales" de la NASA (bueno, son datos aproximados que puse yo, pero la idea es esa).
 
-## 🚀 ¿Qué hace este programa?
+## ¿Qué hace este programa?
 
 Es una simulación visual donde puedes ver:
 - Los planetas moviéndose alrededor del Sol
@@ -12,7 +12,7 @@ Es una simulación visual donde puedes ver:
 
 La idea del "gemelo digital" es que tenemos dos versiones: la simulación (que calcula todo con física) y la "realidad" (los datos de NASA). Así podemos ver si nuestra física está bien o no.
 
-## 📦 Instalación
+## Instalación
 
 ### Requisitos previos
 - Python 3.7 o superior (yo uso 3.10)
@@ -44,7 +44,7 @@ La idea del "gemelo digital" es que tenemos dos versiones: la simulación (que c
 
 ¡Y listo! Debería abrirse una ventana con la simulación.
 
-## 🎮 Controles
+## Controles
 
 Una vez que esté corriendo, puedes usar:
 
@@ -55,7 +55,7 @@ Una vez que esté corriendo, puedes usar:
 - **Flecha ARRIBA**: Acelerar el tiempo
 - **Flecha ABAJO**: Ralentizar el tiempo
 
-## 🔧 ¿Cómo funciona? (Explicación de las funciones principales)
+## ¿Cómo funciona? (Explicación de las funciones principales)
 
 ### Clase `Planet`
 
@@ -113,14 +113,14 @@ El corazón del programa. Es el loop principal que:
 
 Básicamente: lee input → calcula física → dibuja → repite.
 
-## 📊 Datos técnicos interesantes
+## Datos técnicos interesantes
 
 - **TIMESTEP**: Cada "tick" de la simulación representa 1 día (86,400 segundos). Puedes cambiarlo con las flechas.
 - **AU (Unidad Astronómica)**: Es la distancia Tierra-Sol (≈150 millones de km). Se usa para medir distancias en el sistema solar.
 - **G (Constante Gravitacional)**: 6.67428e-11. Es la constante de la ley de Newton que usamos para calcular fuerzas.
 - **SCALE**: Factor de conversión para que todo quepa en la pantalla (el espacio es ENORME).
 
-## 🎨 Sistema de colores
+## Sistema de colores
 
 - **Verde**: Precisión alta, todo bien
 - **Naranja**: Advertencia, hay desviación
@@ -128,7 +128,7 @@ Básicamente: lee input → calcula física → dibuja → repite.
 - **Cyan**: Elementos seleccionados o títulos
 - **Amarillo**: El Sol y títulos importantes
 
-## 🐛 Problemas comunes
+## Problemas comunes
 
 **"No module named 'pygame'"**: No instalaste pygame. Corre `pip install pygame`
 
@@ -138,7 +138,7 @@ Básicamente: lee input → calcula física → dibuja → repite.
 
 **No se ve nada**: El espacio es oscuro! Espera unos segundos, los planetas empezarán a moverse.
 
-## 💡 Ideas para mejorar (si quieres modificarlo)
+## Ideas para mejorar (si quieres modificarlo)
 
 - Conectar a la API real de NASA Horizons
 - Agregar más planetas (Urano, Neptuno)
@@ -148,7 +148,7 @@ Básicamente: lee input → calcula física → dibuja → repite.
 - Agregar efectos de sonido
 - Grabar las órbitas y hacer replay
 
-## 📚 Referencias
+## Referencias
 
 Las fórmulas físicas vienen de:
 - https://fiftyexamples.readthedocs.io/en/latest/gravity.html
@@ -158,6 +158,6 @@ Los datos planetarios son aproximaciones de las órbitas reales pero simplificad
 
 ---
 
-**Nota**: Este es un proyecto educativo. Las órbitas están simplificadas (son circulares cuando en realidad son elípticas) y hay muchas aproximaciones. Pero es suficientemente preciso para entender cómo funciona la física orbital! 🌍🚀
+**Nota**: Este es un proyecto educativo. Las órbitas están simplificadas (son circulares cuando en realidad son elípticas) y hay muchas aproximaciones. Pero es suficientemente preciso para entender cómo funciona la física orbital!
 
 Si tienes dudas o encuentras bugs, no dudes en preguntar!
