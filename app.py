@@ -10,12 +10,12 @@ from datetime import datetime
 
 pygame.init()
 
-WIDTH, HEIGHT = 1920, 1080
+WIDTH, HEIGHT = 800, 800
 SIDEBAR = 320
 SIM_W = (WIDTH) - SIDEBAR
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Gemelo Digital del Sistema Solar - NASA")
+pygame.display.set_caption("Gemelo Digital órbitas del Sistema Solar - NASA")
 
 # Colores
 WHITE = (255, 255, 255)
@@ -176,7 +176,7 @@ class Planet:
         self.calculate_deviation()
 
 
-def load_nasa_data():
+def load_api_data():
     """Simulacion de datos en tiempo real"""
     print("Conectando con NASA...")
     time.sleep(0.5) 
@@ -271,7 +271,7 @@ def load_nasa_data():
 
 
 def sync_planets_with_nasa(nasa_data):
-    """Convierte datos de NASA en objetos Planet"""
+    """Convierte datos de la api en objetos Planet"""
     planets = []
     AU = Planet.AU
     
@@ -405,7 +405,7 @@ def main():
 
     # Cargar datos de NASA
     print("Inicializando Gemelo Digital...")
-    nasa_data = load_nasa_data()
+    nasa_data = load_api_data()
     planets = sync_planets_with_nasa(nasa_data)
     
     state = {
@@ -417,12 +417,12 @@ def main():
         'show_trails': True,
     }
 
-    print("Gemelo Digital activo\n")
-    print("Características del Gemelo Digital:")
-    print("  - Sincronización con datos reales de NASA")
-    print("  - Comparación en tiempo real: Modelo vs Realidad")
-    print("  - Cálculo de desviaciones y precisión")
-    print("  - Validación continua del modelo físico\n")
+    print("Simulacion en camino a Gemelo Digital \n")
+    print("Características:")
+    print(" - Sincronización con datos reales de NASA")
+    print(" - Comparación en tiempo real: Modelo vs Realidad")
+    print(" - Cálculo de desviaciones y precisión")
+    print(" - Validación continua del modelo físico\n")
 
     while run:
         clock.tick(60)
@@ -440,7 +440,7 @@ def main():
                 elif event.key == pygame.K_s:
                     # Re-sincronizar con NASA
                     print("\nRe-sincronizando con NASA...")
-                    nasa_data = load_nasa_data()
+                    nasa_data = load_api_data()
                     state['planets'] = sync_planets_with_nasa(nasa_data)
                     state['last_sync'] = datetime.now()
                     state['selected_planet'] = None
@@ -457,7 +457,7 @@ def main():
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mx, my = pygame.mouse.get_pos()
-                if mx < SIM_W:
+                if mx < SIM_W:    
                     # Seleccionar planeta
                     state['selected_planet'] = None
                     for p in state['planets']:
