@@ -1,10 +1,8 @@
 # Simulador del Sistema Solar - En camino a un Gemelo Digital
 
-Este proyecto de simulación del sistema solar,basado en física real. 
-Actualmente reproduce el movimiento de los planetas y compara los resultados con datos de referencia aproximados tomados de fuentes de la NASA.
+Este proyecto es una simulación del sistema solar basada en física real y conectada a datos en tiempo real mediante AstronomyAPI. Utiliza modelos gravitacionales para calcular las trayectorias planetarias y compara esos resultados con posiciones reales obtenidas directamente desde la API, lo que permite evaluar la precisión del modelo en cada actualización.
 
-Este proyecto no es todavía un gemelo digital completo, sino una simulación con enfoque hacia el concepto de gemelo digital. La diferencia principal es que una simulación reproduce el comportamiento de un sistema con modelos matemáticos, mientras que un gemelo digital utiliza datos reales en tiempo real para mantener sincronización con el sistema físico.
-La idea es que, en el futuro, este proyecto se conecte a una API astronómica real (como NASA Horizons) para actualizar posiciones y realizar predicciones precisas, momento en el que podría considerarse un gemelo digital funcional.
+Gracias a esta integración, el proyecto deja de ser únicamente una simulación y se convierte en una implementación preliminar de un gemelo digital, ya que mantiene sincronización continua entre el sistema físico (mediciones astronómicas reales) y su representación virtual. En futuras versiones se planea ampliar la integración de datos, mejorar la precisión orbital y extender el modelo a lunas, asteroides y cuerpos adicionales.
 
 ## ¿Qué hace este programa?
 
@@ -16,7 +14,7 @@ Es una simulación visual donde puedes ver:
 
 El concepto de gemelo digital se aplica aquí al tener dos representaciones del sistema:
 1. La simulación física (calculada por el programa).
-2. Los datos “reales” de referencia (aproximaciones tomadas como si vinieran de la NASA).
+2. Los datos "reales" de referencia (aproximaciones tomadas como si vinieran de la NASA).
 Esto permite analizar la precisión del modelo y establecer la base de comparación que caracteriza a los gemelos digitales.
 
 ## Instalación
@@ -34,17 +32,31 @@ Esto permite analizar la precisión del modelo y establecer la base de comparaci
    ```
    O simplemente descarga los archivos y ponlos en una carpeta.
 
-2. **Instala pygame**
+2. **Instala las dependencias**
    ```bash
    pip install -r requirements.txt
    ```
    
-   Si te da problemas, prueba con:
+   Si te da problemas, prueba instalando manualmente:
    ```bash
-   pip install pygame
+   pip install pygame requests python-dotenv
    ```
 
-3. **Ejecuta el programa**
+3. **Configuración de la API (opcional)**
+   
+   El proyecto incluye un script `request.py` que puede conectarse a la API real de Astronomy API para obtener datos reales de posiciones planetarias. Para usarlo:
+   
+   - Crea un archivo `.env` en la raíz del proyecto
+   - Agrega tus credenciales de la API:
+     ```
+     app_id=tu_app_id_aqui
+     app_secret=tu_app_secret_aqui
+     ```
+   - Obtén tus credenciales registrándote en: https://astronomyapi.com/
+   
+   **Nota**: Este paso es opcional. El programa `app.py` funciona sin la API usando datos aproximados.
+
+4. **Ejecuta el programa**
    ```bash
    python app.py
    ```
@@ -84,7 +96,7 @@ Esta es la clase más importante, representa cada planeta/estrella:
 
 **`update_position()`**: Aquí pasa la magia. Calcula todas las fuerzas que actúan sobre el planeta, actualiza su velocidad y luego su posición. Básicamente simula el movimiento usando física real.
 
-### Función `load_nasa_data()`
+### Función `load_api_data()`
 
 Simula la carga de datos de NASA. En un proyecto real esto haría una petición HTTP a la API de NASA, pero aquí solo devuelve datos hardcodeados que son aproximadamente correctos para noviembre 2025.
 
@@ -92,6 +104,27 @@ Devuelve un diccionario con:
 - Posiciones iniciales (en UA - Unidades Astronómicas)
 - Velocidades iniciales (en km/s)
 - Masas, colores, tamaños, etc.
+
+### Script `request.py`
+
+Este archivo complementario permite consultar datos reales de posiciones planetarias usando la Astronomy API. Funcionalidad:
+
+**Variables de entorno**: Lee `app_id` y `app_secret` desde un archivo `.env` usando `python-dotenv`. Esto mantiene tus credenciales seguras y fuera del código.
+
+**Autenticación**: Codifica las credenciales en Base64 para crear el header de autorización requerido por la API (`Basic auth_encoded`).
+
+**Parámetros de consulta**:
+- Ubicación geográfica (latitud, longitud, elevación) - Configurado para Cali, Colombia por defecto
+- Fecha y hora específica (2025-11-14 12:00:00)
+- Formato de salida (rows)
+
+**Consulta múltiple**: Itera sobre una lista de planetas (Sol, Mercurio, Venus, Tierra, Marte, Júpiter, Saturno) y hace peticiones individuales para cada uno al endpoint específico.
+
+**Endpoint**: Usa `https://api.astronomyapi.com/api/v2/bodies/positions/{planeta}` para obtener datos de posición, distancia, magnitud aparente, y otros parámetros astronómicos reales.
+
+**Salida**: Imprime el estado HTTP y la respuesta JSON de cada planeta, permitiendo ver datos reales que podrían integrarse en la simulación.
+
+Este script es independiente de `app.py` y sirve como herramienta de prueba o para futuras integraciones con datos reales en tiempo real. Actualmente, `app.py` usa datos simulados en `load_api_data()`, pero podrías modificarlo para usar los datos obtenidos por `request.py`.
 
 ### Función `sync_planets_with_nasa()`
 
@@ -139,21 +172,30 @@ Básicamente: lee input → calcula física → dibuja → repite.
 
 **"No module named 'pygame'"**: No instalaste pygame. Corre `pip install pygame`
 
-**La ventana se ve rara**: Está diseñada para 1920x1080. Si tu pantalla es más pequeña, edita las variables `WIDTH` y `HEIGHT` al inicio del código.
+**"No module named 'requests'" o "'dotenv'"**: Falta instalar dependencias. Corre `pip install requests python-dotenv`
+
+**La ventana se ve rara**: Está diseñada para 800x800. Si tu pantalla es más pequeña, edita las variables `WIDTH` y `HEIGHT` al inicio del código.
 
 **Los planetas se mueven muy rápido/lento**: Usa las flechas arriba/abajo para ajustar la velocidad de tiempo.
 
 **No se ve nada**: El espacio es oscuro! Espera unos segundos, los planetas empezarán a moverse.
 
+**Error con .env en request.py**: Asegúrate de haber creado el archivo `.env` en la raíz del proyecto con tus credenciales de Astronomy API.
+
 ## Ideas para mejorar (si quieres modificarlo)
 
-- Conectar a la API real de NASA Horizons
+- Integrar `request.py` con `app.py` para usar datos reales de Astronomy API en lugar de datos simulados
+- Conectar a la API real de NASA Horizons (alternativa a Astronomy API)
 - Agregar más planetas (Urano, Neptuno)
 - Agregar lunas
 - Hacer zoom con la rueda del mouse
 - Permitir arrastrar la vista
 - Agregar efectos de sonido
 - Grabar las órbitas y hacer replay
+- Sistema de caché para evitar consultas repetidas a la API
+- Modo de predicción que calcule posiciones futuras
+- Actualización periódica automática desde la API cada X minutos/horas
+- Comparación de múltiples fuentes de datos (NASA Horizons vs Astronomy API)
 
 ## Referencias
 
@@ -162,6 +204,10 @@ Las fórmulas físicas vienen de:
 - Tutorial de simulación orbital: https://www.youtube.com/watch?v=WTLPmUHTPqo
 
 Los datos planetarios son aproximaciones de las órbitas reales pero simplificadas.
+
+Para datos reales en tiempo real, consulta:
+- Astronomy API: https://astronomyapi.com/
+- NASA Horizons System: https://ssd.jpl.nasa.gov/horizons/
 
 ---
 
